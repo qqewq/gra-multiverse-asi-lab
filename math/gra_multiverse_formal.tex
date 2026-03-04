@@ -1,0 +1,338 @@
+\documentclass[12pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm}
+
+\title{GRA Multiverse Meta-Reset: Formal Definition}
+\author{AAA AAA}
+\date{March 2026}
+
+\begin{document}
+\maketitle
+
+\section{Overview}
+
+This document formalizes the \emph{GRA Multiverse Meta-Reset} (Мета-обнулёнка)
+architecture as used in the \texttt{gra-multiverse-asi-lab} repository.
+It extends a base GRA reset mechanism to a multi-level, multiverse setting,
+and defines a global functional $J_{\text{multiverse}}$ together with
+conditions for complete multiverse reset (``обнуление'').[file:850][web:963]
+
+We assume a family of subsystems indexed by multi-indices and organized
+into levels $l = 0,1,\dots,K$, where:
+\begin{itemize}
+  \item Level $0$ contains local domains (tasks, modules, agents).
+  \item Level $1$ contains meta-systems over level-$0$ domains.
+  \item Level $2$ contains meta-meta-systems, etc.
+  \item Level $K$ is the global multiverse level.
+\end{itemize}[file:850]
+
+\section{Indexing and State Spaces}
+
+\subsection{Multi-indices}
+
+Let $\mathcal{I}$ be a set of multi-indices
+\[
+\bm{a} = (a_0, a_1, \dots, a_k),
+\]
+where $k = \dim(\bm{a})$ denotes the level of $\bm{a}$ in the hierarchy
+($0 \le k \le K$).[file:850]
+
+We write
+\[
+\mathcal{I}^{(l)} = \{ \bm{a} \in \mathcal{I} \mid \dim(\bm{a}) = l \}
+\]
+for the set of indices at level $l$.
+
+We use the relation
+\[
+\bm{b} \prec \bm{a}
+\]
+to mean that $\bm{b}$ is a \emph{subsystem} of $\bm{a}$; formally, this specifies
+the hierarchical embedding of lower-level subsystems into higher-level ones.[file:850]
+
+\subsection{Local Hilbert Spaces and Level Spaces}
+
+To each index $\bm{a} \in \mathcal{I}$ we associate a Hilbert space
+$\mathcal{H}^{(\bm{a})}$, representing the state space of subsystem $\bm{a}$.
+
+For each level $l$ we define the level space
+\[
+\mathcal{H}^{(l)} =
+\bigotimes_{\bm{a} \in \mathcal{I}^{(l)}} \mathcal{H}^{(\bm{a})}.
+\]
+
+The total multiverse Hilbert space is
+\[
+\mathcal{H}_{\text{multiverse}} =
+\bigotimes_{l=0}^K \mathcal{H}^{(l)}.
+\]
+
+A multiverse state is a vector
+\[
+\Psi_{\text{multiverse}} \in \mathcal{H}_{\text{multiverse}},
+\]
+which can be decomposed into its level components and subsystem components
+\[
+\Psi_{\text{multiverse}}
+\longleftrightarrow
+\{ \Psi^{(\bm{a})} \}_{\bm{a} \in \mathcal{I}}.
+\][file:850]
+
+\section{Goals, Projectors, and Foam}
+
+\subsection{Goals and Projectors at Each Level}
+
+For each level $l$ we define:
+\begin{itemize}
+  \item A goal $G_l$ (or a family $\{G_l^{(\bm{a})}\}_{\bm{a} \in \mathcal{I}^{(l)}}$).
+  \item A projector $\mathcal{P}_{G_l}$ (or $\mathcal{P}_{G_l^{(\bm{a})}}$) onto the
+        solution subspace corresponding to that goal.
+\end{itemize}
+
+These projectors encode what it means for a subsystem or collection of subsystems
+to be in a ``goal-satisfying'' state at level $l$.[file:850]
+
+\subsection{Foam at Level \texorpdfstring{$l$}{l}}
+
+Let $\Psi^{(l)}$ denote the joint state at level $l$, interpreted as the tensor
+product of $\Psi^{(\bm{a})}$ over all $\bm{a} \in \mathcal{I}^{(l)}$.
+
+We define the \emph{foam} at level $l$ as
+\[
+\Phi^{(l)}\big(\Psi^{(l)}, G_l\big) =
+\sum_{\bm{a} \neq \bm{b} \atop \bm{a},\bm{b} \in \mathcal{I}^{(l)}}
+\left|
+  \left\langle
+    \Psi^{(\bm{a})}
+    \,\middle|\,
+    \mathcal{P}_{G_l}
+    \,\middle|\,
+    \Psi^{(\bm{b})}
+  \right\rangle
+\right|^2.
+\]
+
+Intuitively, $\Phi^{(l)}$ measures off-diagonal, goal-unexplained correlations
+between subsystems at level $l$; non-zero values indicate interpretational
+artifacts or inconsistencies.[file:850]
+
+\section{Multiverse Functional}
+
+\subsection{Local Functional at Level 0}
+
+At level $0$, for each $\bm{a} \in \mathcal{I}^{(0)}$ we define a local
+functional
+\[
+J^{(0)}\big(\Psi^{(\bm{a})}\big)
+=
+J_{\text{loc}}\big(\Psi^{(\bm{a})}; G_0^{(\bm{a})}\big),
+\]
+which encodes task performance, base alignment, and other local criteria.[file:850]
+
+\subsection{Recursive Definition of Level Functionals}
+
+For $l \ge 1$ and $\bm{a} \in \mathcal{I}^{(l)}$ we define recursively:
+\[
+J^{(l)}\big(\Psi^{(\bm{a})}\big)
+=
+\sum_{\substack{\bm{b} \prec \bm{a} \\
+                \bm{b} \in \mathcal{I}^{(l-1)}}}
+J^{(l-1)}\big(\Psi^{(\bm{b})}\big)
++
+\Phi^{(l)}\big(\Psi^{(\bm{a})}, G_l^{(\bm{a})}\big).
+\]
+
+Here the sum over $\bm{b} \prec \bm{a}$ aggregates contributions from all
+subsystems contained in $\bm{a}$, and the foam term penalizes inconsistency
+at level $l$.[file:850]
+
+\subsection{Global Multiverse Functional}
+
+We introduce non-negative weights for levels
+\[
+\Lambda_l = \lambda_0 \alpha^l,
+\quad 0 < \alpha < 1,
+\]
+with a base weight $\lambda_0 > 0$.[file:850]
+
+The full multiverse functional is
+\[
+J_{\text{multiverse}}(\bm{\Psi}) =
+\sum_{l=0}^K \Lambda_l
+\sum_{\bm{a} \in \mathcal{I}^{(l)}}
+J^{(l)}\big(\Psi^{(\bm{a})}\big),
+\]
+where $\bm{\Psi} = \{\Psi^{(\bm{a})}\}_{\bm{a} \in \mathcal{I}}$ is the collection
+of all subsystem states.
+
+Minimizing $J_{\text{multiverse}}$ corresponds to simultaneously:
+\begin{itemize}
+  \item solving local tasks,
+  \item aligning subsystems and meta-systems,
+  \item eliminating hierarchical foam across all levels.[web:963][web:956]
+\end{itemize}
+
+\section{Complete Multiverse Reset}
+
+\subsection{Definition}
+
+We say that the multiverse is in a state of \emph{complete reset}
+if there exists $\bm{\Psi}^* = \{\Psi^{(\bm{a})*}\}_{\bm{a}}$ such that
+\[
+\Phi^{(l)}\big(\Psi^{(l)*}, G_l\big) = 0
+\quad \forall\, l = 0,\dots,K.
+\]
+
+Equivalently, at each level $l$ all off-diagonal, goal-unexplained
+correlations vanish, and each subsystem is perfectly aligned
+with its goal projector.[file:850]
+
+\subsection{Assumptions}
+
+We consider the following structural conditions:
+\begin{enumerate}
+  \item \textbf{Commutativity of goal projectors}:
+    \[
+    \big[
+      \mathcal{P}_{G_l^{(\bm{a})}},
+      \mathcal{P}_{G_m^{(\bm{b})}}
+    \big] = 0
+    \quad
+    \forall\, \bm{a},\bm{b},\ l,m.
+    \]
+  \item \textbf{Hierarchical consistency}:
+    for $l \ge 1$ and $\bm{a} \in \mathcal{I}^{(l)}$,
+    \[
+    \mathcal{P}_{G_l^{(\bm{a})}} =
+    \bigotimes_{\substack{\bm{b} \prec \bm{a} \\
+                          \bm{b} \in \mathcal{I}^{(l-1)}}}
+    \mathcal{P}_{G_{l-1}^{(\bm{b})}}.
+    \]
+  \item \textbf{Sufficient dimension}:
+    \[
+    \dim(\mathcal{H}_{\text{multiverse}})
+    \ge
+    \prod_{l=0}^K N_l,
+    \]
+    where $N_l = |\mathcal{I}^{(l)}|$ is the number of subsystems at level $l$.[file:850]
+\end{enumerate}
+
+\subsection{Theorem (Multiverse Reset)}
+
+Under the above conditions there exists a state
+$\bm{\Psi}^* = \{\Psi^{(\bm{a})*}\}$ such that
+\[
+\Phi^{(l)}\big(\Psi^{(l)*}, G_l\big) = 0
+\quad \forall\, l = 0,\dots,K.
+\]
+
+\paragraph{Proof sketch.}
+\begin{itemize}
+  \item \textbf{Base step ($l=0$):} follows from the local reset theorem
+        (existence of states aligned with $\mathcal{P}_{G_0^{(\bm{a})}}$ for all $\bm{a} \in \mathcal{I}^{(0)}$).[file:850]
+  \item \textbf{Inductive step:} assume reset achieved up to level $l-1$.
+    Using hierarchical consistency, we have
+    \[
+    \mathcal{P}_{G_l^{(\bm{a})}} =
+    \bigotimes_{\bm{b} \prec \bm{a}}
+    \mathcal{P}_{G_{l-1}^{(\bm{b})}}.
+    \]
+    If each $\Psi^{(\bm{b})*}$ is an eigenvector of $\mathcal{P}_{G_{l-1}^{(\bm{b})}}$,
+    then their tensor product is an eigenvector of $\mathcal{P}_{G_l^{(\bm{a})}}$.
+    Working in a basis where all projectors are diagonal (commutativity),
+    off-diagonal terms vanish and thus $\Phi^{(l)} = 0$.
+\end{itemize}
+
+\section{Optimization and Dynamics}
+
+\subsection{Gradient Structure}
+
+The gradient of $J_{\text{multiverse}}$ with respect to subsystem state
+$\Psi^{(\bm{a})}$ at level $l = \dim(\bm{a})$ can be written as
+\[
+\frac{\partial J_{\text{multiverse}}}{\partial \Psi^{(\bm{a})}} =
+\Lambda_l
+\frac{\partial \Phi^{(l)}}{\partial \Psi^{(\bm{a})}}
++
+\sum_{\bm{b} \succ \bm{a}}
+\Lambda_{\dim(\bm{b})}
+\frac{\partial \Phi^{(\dim(\bm{b}))}}{\partial \Psi^{(\bm{a})}},
+\]
+where the sum is over all higher-level subsystems $\bm{b}$ that contain $\bm{a}$.[file:850]
+
+A basic gradient descent update has the form
+\[
+\Psi^{(\bm{a})}(t+1) =
+\Psi^{(\bm{a})}(t)
+-
+\eta
+\left[
+\Lambda_l
+\frac{\partial \Phi^{(l)}}{\partial \Psi^{(\bm{a})}}
++
+\sum_{\bm{b} \succ \bm{a}}
+\Lambda_{\dim(\bm{b})}
+\frac{\partial \Phi^{(\dim(\bm{b}))}}{\partial \Psi^{(\bm{a})}}
+\right],
+\]
+with learning rate $\eta > 0$.
+
+\subsection{Complexity}
+
+For a multiverse with $K$ levels and $N$ subsystems per level (for simplicity),
+the total cost of computing pairwise foam terms is
+\[
+\mathcal{O}\left(
+  \sum_{l=0}^K N^2 \alpha^l
+\right)
+=
+\mathcal{O}\left(
+  N^2 \frac{1 - \alpha^{K+1}}{1 - \alpha}
+\right),
+\quad 0 < \alpha < 1.
+\]
+
+In the limit $K \to \infty$ and fixed $\alpha < 1$, this remains polynomial:
+\[
+\mathcal{O}\left(
+  \frac{N^2}{1-\alpha}
+\right).
+\][file:850]
+
+\section{Limit State and Cognitive Vacuum}
+
+Consider the limit $K \to \infty$ (infinite hierarchy) and a sequence of optimal
+states $\Psi_K^*$ for each finite $K$. If the limit
+\[
+\Psi_\infty^* = \lim_{K \to \infty} \Psi_K^*
+\]
+exists in an appropriate sense, and
+\[
+\Phi^{(l)}\big(\Psi_\infty^*, G_l\big) = 0
+\quad \forall\, l \in \mathbb{N},
+\]
+then $\Psi_\infty^*$ lies in the intersection
+\[
+\Psi_\infty^* \in \bigcap_{l=0}^\infty \ker(\Phi^{(l)}).
+\]
+
+This intersection can be interpreted as a \emph{cognitive vacuum}:
+a state free from interpretational artifacts at all levels, containing
+only structural invariants of the underlying reality.[file:850][web:963]
+
+\section{Remarks on Safety and Self-Modification}
+
+In the context of self-improving agents, we restrict allowed
+modifications $m$ of the state and architecture to a safe set
+\[
+\mathcal{M}_{\text{safe}} =
+\{ m \mid [\mathcal{P}_{G_l}, m] = 0 \ \forall l \},
+\]
+ensuring that goal projectors remain fixed while the agent optimizes
+its internal structure with respect to $J_{\text{multiverse}}$.[web:961][web:964][web:956]
+
+This makes the multiverse reset functional suitable as a target for
+recursive self-improvement without trivial goal corruption or wireheading.
+
+\end{document}

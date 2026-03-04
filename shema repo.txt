@@ -1,0 +1,41 @@
+gra-multiverse-asi-lab/
+├─ README.md
+├─ LICENSE
+│
+├─ docs/
+│  ├─ 01_gra_multiverse_intro.md
+│  ├─ 02_forum_of_agents_concept.md
+│  ├─ 03_asi_from_existing_agent.md
+│  ├─ 04_safety_and_constraints.md
+│  └─ 05_roadmap.md
+│
+├─ math/
+│  ├─ gra_multiverse_formal.tex          # твой текущий текст + мультиверс
+│  └─ asi_from_agent_formal.tex         # формализация self-improvement
+│
+├─ core/
+│  ├─ gra_functional.py                 # реализация Φ^(l), J^(l), J_multiverse
+│  ├─ projectors.py                     # задание P_{G_l} для разных задач
+│  └─ multiverse_optimizer.py           # общий цикл обнуления
+│
+├─ agents_forum/
+│  ├─ README.md                         # описание концепции форума агентов
+│  ├─ specs/
+│  │  ├─ agent_api.md                   # интерфейс агентов
+│  │  └─ tasks_protocol.md              # протокол общения/задач
+│  └─ reference_impl/
+│     ├─ simple_forum_server.py         # минимальный "форум"
+│     └─ toy_agent_client.py           # клиент-агент
+│
+├─ asi_from_existing/
+│  ├─ README.md                         # как применять GRA к существующему ИИ
+│  ├─ toy_agent/
+│  │  ├─ model.py                       # простая модель-агент
+│  │  ├─ gra_wrapper.py                 # обвязка GRA вокруг агента
+│  │  └─ self_improve_loop.py          # цикл самосовершенствования
+│  └─ notebooks/
+│     └─ 01_toy_self_improving_agent.ipynb
+│
+└─ examples/
+   ├─ 01_minimal_multiverse_example.py  # простой пример использования core/
+   └─ 02_forum_and_asi_scenario.md      # сценарий "форум агентов строит ASI"
