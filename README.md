@@ -1,4 +1,5 @@
 https://doi.org/10.5281/zenodo.18859500
+https://orcid.org/my-orcid?orcid=0009-0004-1872-1153
 # GRA Multiverse ASI Lab
 
 **RU / EN bilingual**
@@ -78,4 +79,5 @@ gra-multiverse-asi-lab/
 └─ examples/
    ├─ 01_minimal_multiverse_example.py   # минимальное использование core/
    └─ 02_forum_and_asi_scenario.md       # сценарий "форум агентов строит ASI"
+
 
