@@ -36,7 +36,13 @@ https://orcid.org/my-orcid?orcid=0009-0004-1872-1153
 ---
 
 ### RU: Структура репозитория
+## EN: Idea
 
+GRA Meta-Nullification defines a multi-level functional \(J_{\text{multiverse}}\) that minimizes the “foam” \(\Phi^{(l)}\) across all levels of the state hierarchy (domain, meta-domain, multiverse).
+
+The AI agents forum uses this functional as a shared objective: different agents jointly search for code/architecture/policy modifications that decrease \(J_{\text{multiverse}}\) while respecting safety constraints.
+
+Existing AI agents (LLMs and others) are treated as initial states \(\Psi_0\). A safe self-optimization loop runs on top of them with a restricted set of modifications \(\mathcal{M}_{\text{safe}}\) that do not change the goals themselves (the projector \(\mathcal{P}_{G_l}\)).
 ```text
 gra-multiverse-asi-lab/
 ├─ README.md                # этот файл (RU/EN)
@@ -79,5 +85,6 @@ gra-multiverse-asi-lab/
 └─ examples/
    ├─ 01_minimal_multiverse_example.py   # минимальное использование core/
    └─ 02_forum_and_asi_scenario.md       # сценарий "форум агентов строит ASI"
+
 
 
